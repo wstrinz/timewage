@@ -105,11 +105,11 @@ defmodule TimeWage do
   end
 
   def run do
-    budget = get_time_budget()
-    used = get_rescuetime_data() |> get_distracted_minutes()
+    budget = get_time_budget() |> round()
+    used = get_rescuetime_data() |> get_distracted_minutes() |> round()
 
-    IO.puts("Total allowed: #{budget}")
     IO.puts("Total used: #{used}")
+    IO.puts("Total allowed: #{budget}")
     IO.puts("Remaining: #{budget - used}")
   end
 end
