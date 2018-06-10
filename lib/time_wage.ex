@@ -34,7 +34,7 @@ defmodule TimeWage do
     |> Map.fetch!("items")
   end
 
-  def completed_today?(item) do
+  def completed_today?(item, today \\ nil) do
     date_string =
       item
       |> Map.fetch!("completed_date")
@@ -44,7 +44,11 @@ defmodule TimeWage do
       |> Timex.parse!("{RFC1123}")
       |> DateTime.to_date()
 
-    date == Timex.today()
+    if today do
+      date == today
+    else
+      date == Timex.now("America/Chicago") |> DateTime.to_date()
+    end
   end
 
   def todoist_completes_today do
