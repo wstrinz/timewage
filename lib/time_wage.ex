@@ -1,10 +1,18 @@
 defmodule TimeWage do
   def get_rescuetime_data do
-    url =
-      "https://www.rescuetime.com/anapi/data?key=#{
-        Application.get_env(:time_wage, :rescuetime_key)
-      }&perspective=interval&restrict_kind=any&resolution_time=day&restrict_begin=2018-06-09&restrict_end=2018-06-09&format=json"
+    {{y, m, d}, _h} = :calendar.local_time()
+    date = "#{y}-#{m}-#{d}"
 
+    params = %{
+      key: Application.get_env(:time_wage, :rescuetime_key),
+      perspective: "interval",
+      resolution_time: "day",
+      restrict_begin: date,
+      restrict_end: date,
+      format: "json"
+    }
+
+    url = "https://www.rescuetime.com/anapi/data?#{URI.encode_query(params)}"
     %HTTPoison.Response{body: body} = HTTPoison.get!(url)
 
     body
@@ -78,6 +86,10 @@ defmodule TimeWage do
     CSV.decode!(IO.binstream(csv_stream, :line)) |> Enum.to_list()
   end
 
+  def last_habit_checkin do
+    extract_habit_progress_csv() |> Enum.at(-1)
+  end
+
   def date_for_item(item) do
     item
     |> Enum.at(-2)
@@ -85,7 +97,8 @@ defmodule TimeWage do
   end
 
   def checked_today?(item) do
-    date_for_item(item) == 550_213_201
+    # 6/9/18 == 550_213_201
+    date_for_item(item) == 550_299_601
   end
 
   def todays_today do
