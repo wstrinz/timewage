@@ -26,3 +26,4 @@ time_wage-*.tar
 /data/HabitTracker.sqlite
 
 .elixir_ls/
+.vscode/
