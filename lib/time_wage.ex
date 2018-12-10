@@ -97,9 +97,9 @@ defmodule TimeWage do
   end
 
   def checked_today?(item) do
-    jun_9_stamp = 550_213_201
-    seconds_since = Date.diff(Date.utc_today(), ~D[2018-06-09]) * 86400
-    date_for_item(item) == jun_9_stamp + seconds_since
+    today_stamp = 566_114_401
+    seconds_since = Date.diff(Date.utc_today(), ~D[2018-12-10]) * 86400
+    date_for_item(item) == today_stamp + seconds_since
   end
 
   def todays_today do
