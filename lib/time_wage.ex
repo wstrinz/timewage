@@ -68,16 +68,16 @@ defmodule TimeWage do
   def copy_todays_db do
     File.cp!(
       Application.get_env(:time_wage, :todays_db_path),
-      "data\\HabitTracker.sqlite"
+      "data/HabitTracker.sqlite"
     )
   end
 
   def extract_habit_progress_csv do
     {csv_string, _status} =
-      System.cmd("C:\\bin\\sqlite3.exe", [
+      System.cmd("/usr/bin/sqlite3", [
         "-header",
         "-csv",
-        "data\\HabitTracker.sqlite",
+        "data/HabitTracker.sqlite",
         "select * from ZHABITPROGRESSENTRY;"
       ])
 

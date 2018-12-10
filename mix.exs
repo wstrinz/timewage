@@ -8,7 +8,6 @@ defmodule TimeWage.MixProject do
       elixir: "~> 1.7.4",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      default_task: "get_balance",
       preferred_cli_env: [
         vcr: :test,
         "vcr.delete": :test,
